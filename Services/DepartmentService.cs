@@ -65,6 +65,13 @@ namespace Employee_Management.Services
             return departmentDto;
         }
 
+        public async Task<IEnumerable<DepartmentDto>> GetDepartmentsPaged(PaginationParameters paginationParameters)
+        {
+            var departments = await _unitOfWork.Departments.GetPagedAsync(paginationParameters);
+            var departmentsDto = _mapper.Map<IEnumerable<DepartmentDto>>(departments);
+            return departmentsDto;
+        }
+
         public async Task<DepartmentDto> UpdateDepartment(DepartmentDto departmentDto)
         {
             var updatemodel = _mapper.Map<Department>(departmentDto);

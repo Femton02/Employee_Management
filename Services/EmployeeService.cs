@@ -3,6 +3,7 @@ using Employee_Management.UnitofWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using System.Runtime.CompilerServices;
 
 namespace Employee_Management.Services
 {
@@ -59,11 +60,11 @@ namespace Employee_Management.Services
             return employeedto;
         }
 
-        public Task<IEnumerable<EmployeeDto>> GetAllEmployees()
+        public async Task<IEnumerable<EmployeeDto>> GetAllEmployees()
         {
-            var employees = _unitOfWork.Employees.GetAllAsync().Result ?? throw new NotFoundException("No employees found!");
+            var employees = await _unitOfWork.Employees.GetAllAsync() ?? throw new NotFoundException("No employees found!");
             var employeeDtos = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
-            return System.Threading.Tasks.Task.FromResult(employeeDtos);
+            return employeeDtos;
         }
 
         public async Task<EmployeeDto> GetEmployeeById(int id)
@@ -71,6 +72,13 @@ namespace Employee_Management.Services
             var employee = await _unitOfWork.Employees.GetByIdAsync(id) ?? throw new NotFoundException("Employee not found!");
             var employeeDto = _mapper.Map<EmployeeDto>(employee);
             return employeeDto;
+        }
+
+        public async Task<IEnumerable<EmployeeDto>> GetPagedEmployees(PaginationParameters paginationParameters)
+        {
+            var employees = await _unitOfWork.Employees.GetPagedAsync(paginationParameters) ?? throw new NotFoundException("No employees found!");
+            var employeeDtos = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
+            return employeeDtos;
         }
 
         public async Task<EmployeeDto> UpdateEmployee(EmployeeDto employeeDto)

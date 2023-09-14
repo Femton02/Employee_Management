@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Employee_Management.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Employee_Management.Repositories
@@ -15,7 +17,7 @@ namespace Employee_Management.Repositories
             _dbSet = context.Set<T>();
         }
 
-        virtual public async Task AddAsync(T entity)
+        virtual public async System.Threading.Tasks.Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
         }
@@ -30,6 +32,14 @@ namespace Employee_Management.Repositories
             return await _dbSet.ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetPagedAsync(PaginationParameters paginationParameters)
+        {
+            var query = _dbSet.Skip(paginationParameters.Skip)
+                              .Take(paginationParameters.Take);
+
+            return await query.ToListAsync();
+        }
+
         public virtual async Task<T?> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
@@ -42,7 +52,7 @@ namespace Employee_Management.Repositories
 
         virtual public async void Remove(T entity)
         {
-            await Task.Run(() => _dbSet.Remove(entity));
+            await System.Threading.Tasks.Task.Run(() => _dbSet.Remove(entity));
         }
 
         virtual public void Update(T entity)

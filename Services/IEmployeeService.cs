@@ -10,5 +10,6 @@ namespace Employee_Management.Services
         Task<EmployeeDto> CreateEmployee(EmployeeDto employeeDto);
         Task<EmployeeDto> UpdateEmployee(EmployeeDto employeeDto);
         Task<EmployeeDto> DeleteEmployee(int id);
+        Task<IEnumerable<EmployeeDto>> GetPagedEmployees(PaginationParameters paginationParameters);
     }
 }

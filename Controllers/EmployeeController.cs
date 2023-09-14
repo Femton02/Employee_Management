@@ -27,6 +27,12 @@ namespace Employee_Management.Controllers
             return await _employeeService.GetAllEmployees();
         }
 
+        [HttpGet("paged")]
+        public async Task<IEnumerable<EmployeeDto>> GetPaged([FromQuery] PaginationParameters paginationParameters)
+        {
+            return await _employeeService.GetPagedEmployees(paginationParameters);
+        }
+
         [HttpGet("{id}")]
         public async Task<EmployeeDto> Get(int id)
         {
