@@ -65,15 +65,11 @@ namespace Employee_Management.Services
             return departmentDto;
         }
 
-        public async Task<DepartmentDto> UpdateDepartment(int id, DepartmentDto departmentDto)
+        public async Task<DepartmentDto> UpdateDepartment(DepartmentDto departmentDto)
         {
-            Department department = await _unitOfWork.Departments.GetByIdAsync(id) ?? throw new NotFoundException("Department not found");
-            department.Name = departmentDto.Name;
-            department.Description = departmentDto.Description;
-            department.ManagerID = departmentDto.ManagerID;
-            
+            var updatemodel = _mapper.Map<Department>(departmentDto);
+            _unitOfWork.Departments.Update(updatemodel);
             await _unitOfWork.CompleteAsync();
-
             return departmentDto;
         }
     }

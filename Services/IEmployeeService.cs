@@ -8,7 +8,7 @@ namespace Employee_Management.Services
         Task<IEnumerable<EmployeeDto>> GetAllEmployees();
         Task<EmployeeDto> GetEmployeeById(int id);
         Task<EmployeeDto> CreateEmployee(EmployeeDto employeeDto);
-        Task<EmployeeDto> UpdateEmployee(int id, EmployeeDto employeeDto);
+        Task<EmployeeDto> UpdateEmployee(EmployeeDto employeeDto);
         Task<EmployeeDto> DeleteEmployee(int id);
     }
 }

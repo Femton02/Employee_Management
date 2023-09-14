@@ -73,17 +73,16 @@ namespace Employee_Management.Services
             return employeeDto;
         }
 
-        public async Task<EmployeeDto> UpdateEmployee(int id, EmployeeDto employeeDto)
+        public async Task<EmployeeDto> UpdateEmployee(EmployeeDto employeeDto)
         {
-            var employeeToUpdate = await _unitOfWork.Employees.GetByIdAsync(id) ?? throw new NotFoundException("Employee not found!");
-            employeeToUpdate.Name = employeeDto.Name;
-            employeeToUpdate.Email = employeeDto.Email;
-            employeeToUpdate.DepartmentId = employeeDto.DepartmentId;
+            var employeeToUpdate = _mapper.Map<Employee>(employeeDto);
+            _unitOfWork.Employees.Update(employeeToUpdate);
+            await _unitOfWork.CompleteAsync();
             if (employeeToUpdate.DepartmentId != null)
             {
                 int depid = employeeToUpdate.DepartmentId ?? default;
                 var department = await _unitOfWork.Departments.GetByIdAsync(depid);
-                if (department.ManagerID == employeeToUpdate.Id)
+                if (department?.ManagerID == employeeToUpdate.Id)
                 {
                     var user = await _userManager.FindByNameAsync(employeeToUpdate.Name);
                     if (user != null)
@@ -92,7 +91,6 @@ namespace Employee_Management.Services
                     }
                 }
             }
-            await _unitOfWork.CompleteAsync();
             return employeeDto;
         }
     }

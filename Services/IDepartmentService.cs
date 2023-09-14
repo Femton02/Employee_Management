@@ -8,7 +8,7 @@ namespace Employee_Management.Services
         Task<IEnumerable<DepartmentDto>> GetAllDepartments();
         Task<DepartmentDto> GetDepartmentById(int id);
         Task<DepartmentDto> CreateDepartment(DepartmentDto departmentDto);
-        Task<DepartmentDto> UpdateDepartment(int id, DepartmentDto departmentDto);
+        Task<DepartmentDto> UpdateDepartment(DepartmentDto departmentDto);
         Task<DepartmentDto> DeleteDepartment(int id);
     }
 }

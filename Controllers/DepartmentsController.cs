@@ -39,10 +39,10 @@ namespace Employee_Management.Controllers
             return Ok(await _departmentService.CreateDepartment(departmentDto));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] DepartmentDto departmentDto)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] DepartmentDto departmentDto)
         {
-            return Ok(await _departmentService.UpdateDepartment(id, departmentDto));
+            return Ok(await _departmentService.UpdateDepartment(departmentDto));
         }
 
         [HttpDelete("{id}")]

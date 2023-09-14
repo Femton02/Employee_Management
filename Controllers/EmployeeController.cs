@@ -39,10 +39,10 @@ namespace Employee_Management.Controllers
             return Ok(await _employeeService.CreateEmployee(employee));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] EmployeeDto employee)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] EmployeeDto employee)
         {
-            return Ok(await _employeeService.UpdateEmployee(id, employee));
+            return Ok(await _employeeService.UpdateEmployee(employee));
         }
 
         [HttpDelete("{id}")]
