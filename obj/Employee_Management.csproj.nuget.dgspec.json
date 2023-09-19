@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Clin\\source\\repos\\Employee_Management\\Employee_Management\\Employee_Management.csproj": {}
+    "C:\\Users\\anase\\OneDrive\\Desktop\\EmployeeManagement\\Employee_Management\\Employee_Management.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Clin\\source\\repos\\Employee_Management\\Employee_Management\\Employee_Management.csproj": {
+    "C:\\Users\\anase\\OneDrive\\Desktop\\EmployeeManagement\\Employee_Management\\Employee_Management.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Clin\\source\\repos\\Employee_Management\\Employee_Management\\Employee_Management.csproj",
+        "projectUniqueName": "C:\\Users\\anase\\OneDrive\\Desktop\\EmployeeManagement\\Employee_Management\\Employee_Management.csproj",
         "projectName": "Employee_Management",
-        "projectPath": "C:\\Users\\Clin\\source\\repos\\Employee_Management\\Employee_Management\\Employee_Management.csproj",
-        "packagesPath": "C:\\Users\\Clin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Clin\\source\\repos\\Employee_Management\\Employee_Management\\obj\\",
+        "projectPath": "C:\\Users\\anase\\OneDrive\\Desktop\\EmployeeManagement\\Employee_Management\\Employee_Management.csproj",
+        "packagesPath": "C:\\Users\\anase\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anase\\OneDrive\\Desktop\\EmployeeManagement\\Employee_Management\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Clin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\anase\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -58,27 +58,31 @@
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.11, )"
             },
             "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.11, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.11, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.11, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.11, )"
             },
             "Microsoft.Identity.Web": {
               "target": "Package",
-              "version": "[2.13.3, )"
+              "version": "[2.13.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -86,13 +90,13 @@
             },
             "microsoft.entityframeworkcore.sqlserver": {
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.11, )"
             },
             "microsoft.entityframeworkcore.tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.11, )"
             }
           },
           "imports": [
@@ -114,7 +118,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

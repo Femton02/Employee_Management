@@ -12,6 +12,17 @@ namespace Employee_Management.Repositories
             _context = context;
         }
 
+        public async Task<int> ExecuteUpdateAync(EmployeeDto employeeDto)
+        {
+
+            return await _context.Employees
+                .Where(e => e.Id == employeeDto.Id)
+                .ExecuteUpdateAsync(e => e
+                    .SetProperty(b => b.Name, employeeDto.Name)
+                    .SetProperty(b => b.Email, employeeDto.Email)
+                    .SetProperty(b => b.DepartmentId, employeeDto.DepartmentId)
+                );
+        }
         public override async Task<IEnumerable<Employee>> GetAllAsync()
         {
             return await _context.Employees

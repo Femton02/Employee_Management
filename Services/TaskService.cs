@@ -3,6 +3,7 @@ using Employee_Management.UnitofWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Employee_Management.Specifications;
 using AutoMapper;
 
 namespace Employee_Management.Services
@@ -32,8 +33,10 @@ namespace Employee_Management.Services
         {
             string? userId = ClaimsPrincipal.Current?.FindFirstValue(ClaimTypes.NameIdentifier);
             var useremployee = await _unitOfWork.Employees.FirstOrDefaultAsync(e => e.UserId == userId) ?? throw new NotFoundException("You don't exist :)");
-            var employee = await _unitOfWork.Employees.GetByIdWithDepartmentAsync(useremployee.Id);
-            var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employee?.Department?.Employees);
+            //var employee = await _unitOfWork.Employees.GetByIdWithDepartmentAsync(useremployee.Id);
+            var specification = new EmployeeByIdWithDepartmentSpecification(useremployee.Id);
+            var employee = _unitOfWork.Employees.FindWithSpecificationPattern(specification).FirstOrDefault()?.Department?.Employees;
+            var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employee);
             return await System.Threading.Tasks.Task.FromResult(employeesDto);
         }
 

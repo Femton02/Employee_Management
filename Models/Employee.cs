@@ -30,4 +30,5 @@ namespace Employee_Management.Models
         public int? DepartmentId { get; set; }
         public List<TaskDto>? Tasks { get; set; }
     }
+
 }

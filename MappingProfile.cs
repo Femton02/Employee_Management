@@ -8,7 +8,8 @@ namespace Employee_Management
         public MappingProfile()
         {
             CreateMap<Employee, EmployeeDto>();
-            CreateMap<EmployeeDto, Employee>();
+            CreateMap<EmployeeDto, Employee>()
+                .ForMember(dest => dest.UserId, opt => opt.Ignore());
             CreateMap<Department, DepartmentDto>();
             CreateMap<DepartmentDto, Department>();
             CreateMap<Models.Task, TaskDto>();

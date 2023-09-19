@@ -6,5 +6,6 @@ namespace Employee_Management.Repositories
     {
         Task<Employee?> GetByIdWithDepartmentAsync(int employeeId);
         Task<IEnumerable<Models.Task>?> GatAllTasksAsync(int employeeId);
+        Task<int> ExecuteUpdateAync(EmployeeDto employeeDto);
     }
 }

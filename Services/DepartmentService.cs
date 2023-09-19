@@ -2,6 +2,7 @@
 using Employee_Management.Models;
 using Employee_Management.UnitofWork;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Employee_Management.Services
@@ -23,11 +24,15 @@ namespace Employee_Management.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public DepartmentService(IMapper mapper, IUnitOfWork unitOfWork)
+        public DepartmentService(IMapper mapper, IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
         public async Task<DepartmentDto> CreateDepartment(DepartmentDto departmentDto)
         {
@@ -74,9 +79,35 @@ namespace Employee_Management.Services
 
         public async Task<DepartmentDto> UpdateDepartment(DepartmentDto departmentDto)
         {
-            var updatemodel = _mapper.Map<Department>(departmentDto);
-            _unitOfWork.Departments.Update(updatemodel);
-            await _unitOfWork.CompleteAsync();
+            var department = await _unitOfWork.Departments.FirstOrDefaultAsync(e => e.Id == departmentDto.Id);
+            int? oldManagerId= department?.ManagerID;
+            var updatemodel = await _unitOfWork.Departments.ExecuteUpdate(departmentDto);
+            if (updatemodel == 0)
+            {
+                throw new Exception("No Updates done");
+            }
+            if (departmentDto.ManagerID != oldManagerId)
+            {
+                if (oldManagerId != null)
+                {
+                    var oldmanager = await _unitOfWork.Employees.GetByIdAsync(oldManagerId ?? default);
+                    var olduser = await _userManager.FindByNameAsync(oldmanager.Name);
+                    if (olduser != null)
+                    {
+                        await _userManager.RemoveFromRoleAsync(olduser, UserRoles.Manager);
+                    }
+                }
+            }
+            if (departmentDto.ManagerID != null)
+            {
+                int managerid = departmentDto.ManagerID ?? default;
+                var manager = await _unitOfWork.Employees.GetByIdAsync(managerid);
+                var user = await _userManager.FindByNameAsync(manager.Name);
+                if (user != null)
+                {
+                    await _userManager.AddToRoleAsync(user, UserRoles.Manager);
+                }
+            }
             return departmentDto;
         }
     }

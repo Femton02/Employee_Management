@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace Employee_Management.Services
 {
@@ -83,19 +84,29 @@ namespace Employee_Management.Services
 
         public async Task<EmployeeDto> UpdateEmployee(EmployeeDto employeeDto)
         {
-            var employeeToUpdate = _mapper.Map<Employee>(employeeDto);
-            _unitOfWork.Employees.Update(employeeToUpdate);
-            await _unitOfWork.CompleteAsync();
-            if (employeeToUpdate.DepartmentId != null)
+            var affected = await _unitOfWork.Employees.ExecuteUpdateAync(employeeDto);
+            if (affected == 0)
             {
-                int depid = employeeToUpdate.DepartmentId ?? default;
+                throw new Exception("No Updates done");
+            }
+            if (employeeDto.DepartmentId != null)
+            {
+                int depid = employeeDto.DepartmentId ?? default;
                 var department = await _unitOfWork.Departments.GetByIdAsync(depid);
-                if (department?.ManagerID == employeeToUpdate.Id)
+                if (department?.ManagerID == employeeDto.Id)
                 {
-                    var user = await _userManager.FindByNameAsync(employeeToUpdate.Name);
+                    var user = await _userManager.FindByNameAsync(employeeDto.Name);
                     if (user != null)
                     {
                         await _userManager.AddToRoleAsync(user, UserRoles.Manager);
+                    }
+                }
+                else
+                {
+                    var user = await _userManager.FindByNameAsync(employeeDto.Name);
+                    if (user != null)
+                    {
+                        await _userManager.RemoveFromRoleAsync(user, UserRoles.Manager);
                     }
                 }
             }

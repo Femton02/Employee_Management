@@ -25,7 +25,7 @@ namespace Employee_Management.Repositories
 
         public virtual async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.FirstOrDefaultAsync(predicate);
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
