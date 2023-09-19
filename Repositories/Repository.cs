@@ -1,4 +1,5 @@
 ﻿using Employee_Management.Models;
+using Employee_Management.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
@@ -38,6 +39,10 @@ namespace Employee_Management.Repositories
                               .Take(paginationParameters.Take);
 
             return await query.ToListAsync();
+        }
+        public IEnumerable<T> FindWithSpecificationPattern(ISpecification<T>? specification = null)
+        {
+            return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification);
         }
 
         public virtual async Task<T?> GetByIdAsync(int id)
